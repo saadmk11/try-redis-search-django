@@ -1,0 +1,205 @@
+{% load build_query_string %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+         <!--  This file has been downloaded from https://www.bootdey.com/snippets/view/Filter-search-result-page -->
+        <meta charset="utf-8" />
+        <title>Try RediSearch Django</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/fontawesome.min.css"
+            integrity="sha512-R+xPS2VPCAFvLRy+I4PgbwkWjw1z5B5gNDYgJN5LfzV4gGNeRQyVrY7Uk59rX+c8tzz63j8DeZPLqmXvBxj8pA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <style>
+            body {
+                margin-top: 20px;
+                background: #d5d8dc;
+            }
+            .square {
+                height: 50px;
+                width: 50px;
+            }
+
+            .main-container {
+                position: relative;
+                width: 100%;
+                background: #fff;
+                color: #666666;
+                border-radius: 2px;
+                margin-bottom: 25px;
+                box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .main-container .contained-body {
+                padding: 20px;
+                font-size: 0.9em;
+                line-height: 1.9em;
+            }
+        </style>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/solid.min.css"
+            integrity="sha512-EvFBzDO3WBynQTyPJI+wLCiV0DFXzOazn6aoy/bGjuIhGCZFh8ObhV/nVgDgL0HZYC34D89REh6DOfeJEWMwgg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+    </head>
+    <body>
+        <form method="get" id="searchForm"></form>
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN SEARCH RESULT -->
+                <div class="col-md-12">
+                    <div class="main-container search">
+                        <div class="contained-body">
+                            <div class="row">
+                                <!-- BEGIN FILTERS -->
+                                <div class="col-md-3">
+                                    <h5 class="main-container-title"><i class="fa-solid fa-magnifying-glass"></i> RediSearch & Django</h5>
+                                    <hr />
+
+                                    <h6 class="pb-2">Sort</h6>
+                                    <div class="form-check">
+                                        <input class="form-check-input" form="searchForm" type="radio" id="sort-price-a" name="sort" value="price" {% if "price" in query_data.sort %}checked{% endif %}>
+                                        <label class="form-check-label" for="sort-price-a">
+                                            Price (Low to High)
+                                        </label>
+                                    </div>
+                                    <div class="form-check pb-2">
+                                        <input class="form-check-input" form="searchForm" type="radio" id="sort-price-d" name="sort" value="-price" {% if "-price" in query_data.sort %}checked{% endif %}>
+                                        <label class="form-check-label" for="sort-price-d">
+                                            Price (High to Low)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" form="searchForm" type="radio" id="sort-name-a" name="sort" value="name" {% if "name" in query_data.sort %}checked{% endif %}>
+                                        <label class="form-check-label" for="sort-name-a"> Name (A-Z)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" form="searchForm" type="radio" id="sort-name-d" name="sort" value="-name" {% if "-name" in query_data.sort %}checked{% endif %}>
+                                        <label class="form-check-label" for="sort-name-d"> Name (Z-A)</label>
+                                    </div>
+                                    <hr />
+                                <h6 class="pb-2">Price Range</h6>
+                                <div class="input-group">
+                                  <input form="searchForm" class="form-control" placeholder="From $" type="number" name="min_price" value="{{ request.GET.min_price }}">
+                                  <span class="input-group-text">-</span>
+                                  <input form="searchForm" class="form-control" placeholder="To $" type="number" name="max_price" value="{{ request.GET.max_price }}">
+                                </div>
+                                <hr />
+
+                                    <!-- BEGIN FILTER BY CATEGORY -->
+                                    <h6 class="pb-2">Category</h6>
+                                    {% for category in facets.0 %}
+                                    <div class="form-check">
+                                        <input
+                                            form="searchForm"
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            id="category-{{ forloop.counter }}"
+                                            name="category"
+                                            value="{{ category.category_name }}"
+                                            {% if category.category_name in query_data.category %}checked{% endif %}
+                                        />
+                                        <label class="form-check-label" for="category-{{ forloop.counter }}">
+                                            {{ category.category_name }} ({{ category.count }})
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                    <hr />
+                                    <h6 class="pb-2">Tag</h6>
+                                    {% for tag in facets.1 %}
+                                    <div class="form-check">
+                                        <input form="searchForm" class="form-check-input" type="checkbox" id="tag-{{ forloop.counter }}" name="tags" value="{{ tag.tags_name }}" {% if tag.tags_name in query_data.tags %}checked{% endif %} />
+                                        <label class="form-check-label" for="tag-{{ forloop.counter }}"> {{ tag.tags_name }} ({{ tag.count }})</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="col-md-9">
+                                    <h5>Search Results ({{ object_list.count }})</h5>
+                                    <hr />
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" form="searchForm" placeholder="Search for anything..." name="query" aria-describedby="search-button" value="{{ request.GET.query }}" />
+                                        <button class="btn btn-primary" type="submit" form="searchForm"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                                    </div>
+                                    {% if request.GET.query %}
+                                        <p class="pt-3">Showing results matching "<strong class="text-primary"><u>{{ request.GET.query }}</u></strong>"</p>
+                                    {% endif %}
+                                    <hr />
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <tbody>
+                                                {% for result in object_list %}
+                                                <tr>
+                                                    <td class="number text-center">{{ result.id }}</td>
+                                                    <td class="image"><div class="square"></div></td>
+                                                    <td class="product">
+                                                        <strong>{{ result.name|truncatechars:70 }}</strong><br />
+                                                        {{ result.description|truncatechars:70 }}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{ result.vendor.name }}
+                                                    </td>
+                                                    <td class="text-right text-primary"><strong>$ {{ result.price }}</strong></td>
+                                                </tr>
+                                                {% empty %}
+                                                <tr>
+                                                    <td>No results found.</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% if is_paginated %}
+                                        <nav>
+                                            <ul class="pagination justify-content-center">
+                                                {% if page_obj.has_previous %}
+                                                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% query_string request %}">Previous</a></li>
+                                                {% else %}
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                                    </li>
+                                                {% endif %}
+                                                {% for i in paginator.page_range %}
+                                                    {% if page_obj.number == i %}
+                                                        <li class="page-item active" aria-current="page">
+                                                            <a class="page-link" href="#">{{ i }}</a>
+                                                        </li>
+                                                    {% else %}
+                                                        <li class="page-item"><a class="page-link" href="?page={{ i }}{% query_string request %}">{{ i }}</a></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% if page_obj.has_next %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% query_string request %}">Next</a>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="page-item disabled">
+                                                    <a class="page-link" href="#">Next</a>
+                                                </li>
+                                                {% endif %}
+                                            </ul>
+                                        </nav>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        let colors = ["#6C3483", "#1F618D", "#117A65", "#D68910", "#2E4053", "#212F3D"];
+        let squares = document.querySelectorAll(".square");
+
+        squares.forEach((square) => {
+            square.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        });
+    </script>
+</html>
