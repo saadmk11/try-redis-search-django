@@ -10,6 +10,9 @@ Here's a short video that explains the project and how it uses Redis:
 
 [Insert your own video here, and remove the one below]
 
+![RediSearch Django](https://user-images.githubusercontent.com/24854406/185760945-18bacae6-af2e-48bd-a412-d6fac878fd0c.png)
+
+
 [![Embed your YouTube video](https://i.ytimg.com/vi/vyxdC1qK4NE/maxresdefault.jpg)](https://www.youtube.com/watch?v=vyxdC1qK4NE)
 
 ## How it works
