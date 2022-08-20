@@ -10,7 +10,6 @@
         }
     ],
     "env": {
-        "DISABLE_COLLECTSTATIC": "1",
         "SECRET_KEY": {
             "description": "A secret key for Django",
             "generator": "secret"
@@ -33,6 +32,6 @@
         }
     },
     "scripts": {
-        "postdeploy": "./heroku_post_deploy.sh"
+        "postdeploy": "python manage.py index"
     }
 }
