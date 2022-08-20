@@ -4,6 +4,11 @@
     "repository": "https://github.com/saadmk11/try-redis-search-django",
     "keywords": ["django", "python", "heroku", "redis", "redisearch", "search", "search engine", "search engine with django"],
     "success_url": "/",
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }
+    ],
     "env": {
         "DISABLE_COLLECTSTATIC": "1",
         "SECRET_KEY": {
