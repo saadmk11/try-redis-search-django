@@ -1,0 +1,33 @@
+{
+    "name": "RediSearch With Django",
+    "description": "A Template for Running Django with Redisearch as a Search Engine",
+    "repository": "https://github.com/saadmk11/try-redis-search-django",
+    "keywords": ["django", "python", "heroku", "redis", "redisearch", "search", "search engine", "search engine with django"],
+    "success_url": "/",
+    "env": {
+        "DISABLE_COLLECTSTATIC": "1",
+        "SECRET_KEY": {
+            "description": "A secret key for Django",
+            "generator": "secret"
+        },
+        "DEBUG": {
+            "description": "Run Django on Debug Mode",
+            "value": true
+        },
+        "ALLOWED_HOSTS": {
+            "description": "Django Allowed Hosts",
+            "value": ".herokuapp.com"
+        },
+        "REDIS_SEARCH_AUTO_INDEX": {
+            "description": "Enable Redisearch Auto Indexing",
+            "required": true
+        },
+        "REDIS_OM_URL": {
+            "description": "Redis URL. E.g: redis://[[username]:[password]]@host:port/[database number]",
+            "required": true
+        }
+    },
+    "scripts": {
+        "postdeploy": "./heroku_post_deploy.sh"
+    }
+}

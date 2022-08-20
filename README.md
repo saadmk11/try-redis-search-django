@@ -41,6 +41,7 @@ Refer to [this example](https://github.com/redis-developer/basic-analytics-dashb
 ### Resources
 
 **Dataset:** https://github.com/etano/productner/blob/master/Product%20Dataset.csv
+
 **Bootstrap Template:** https://www.bootdey.com/snippets/view/Filter-search-result-page
 
 ## Deployment
@@ -49,7 +50,8 @@ To make deploys work, you need to create free account on [Redis Cloud](https://r
 
 ### Heroku
 
-[Insert Deploy on Heroku button](https://devcenter.heroku.com/articles/heroku-button)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/saadmk11/try-redis-search-django)
+
 
 ## More Information about Redis Stack
 
