@@ -2,9 +2,11 @@
 
 # Description
 
-I **build** **[`redis-search-django`](https://github.com/saadmk11/redis-search-django)** (**Django Package**) as a part of **[Redis Hackathon on DEV](https://dev.to/devteam/announcing-the-redis-hackathon-on-dev-3248)**. 
+I **build** **[`redis-search-django`](https://github.com/saadmk11/redis-search-django)** (**Installable Django Package**) as a part of **[Redis Hackathon on DEV](https://dev.to/devteam/announcing-the-redis-hackathon-on-dev-3248)**. 
 **`redis-search-django`** is a package that provides **auto indexing** and **searching** capabilities for Django model instances using **[RediSearch](https://redis.io/docs/stack/search/)**. 
 This is a Demo App that uses `redis-search-django` package to Showcase a Product Search Engine with **auto indexing** and **searching**.
+
+**redis-search-django Documentation:** https://github.com/saadmk11/redis-search-django
 
 
 ### App Screenshot
