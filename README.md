@@ -49,7 +49,7 @@ class CategoryDocument(JsonDocument):
         fields = ["name", "slug"]
 ```
 
-**3. Run Index Django Management Command to create the index on Redis:**
+**3. Run Index Django Management Command to create the index on Redis (Only need to run once to generate Index Schema on Redis):**
 
 ```bash
 python manage.py index
@@ -57,7 +57,7 @@ python manage.py index
 
 **Note:** This will also populate the index with existing data from the database
 
-Now category objects will be indexed on Redis on create/update/delete events.
+Now **category objects** will be indexed **automatically** on **Redis** on **create/update/delete** events.
 
 ### How the data is stored:
 
