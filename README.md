@@ -2,7 +2,7 @@
 
 # Description
 
-I **build** **[`redis-search-django`](https://github.com/saadmk11/redis-search-django)** (**Django Package**) as a part of **Redis Hackathon on DEV**. 
+I **build** **[`redis-search-django`](https://github.com/saadmk11/redis-search-django)** (**Django Package**) as a part of **[Redis Hackathon on DEV](https://dev.to/devteam/announcing-the-redis-hackathon-on-dev-3248)**. 
 **`redis-search-django`** is a package that provides **auto indexing** and **searching** capabilities for Django model instances using **[RediSearch](https://redis.io/docs/stack/search/)**. 
 This is a Demo App that uses `redis-search-django` package to Showcase a Product Search Engine with **auto indexing** and **searching**.
 
@@ -12,6 +12,52 @@ This is a Demo App that uses `redis-search-django` package to Showcase a Product
 ![RediSearch Django](https://user-images.githubusercontent.com/24854406/185760945-18bacae6-af2e-48bd-a412-d6fac878fd0c.png)
 
 ## How it works
+
+### Create Search Document from Django Model. (Using `redis-search-django`)
+
+**1. For Django Model:**
+
+```python
+# models.py
+
+from django.db import models
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=30)
+    slug = models.SlugField(max_length=30)
+
+    def __str__(self) -> str:
+        return self.name
+```
+
+**2. You can create a document class like this:**
+
+**Note:** Document classes must be stored in `documents.py` file.
+
+```python
+# documents.py
+
+from redis_search_django.documents import JsonDocument
+
+from .models import Category
+
+
+class CategoryDocument(JsonDocument):
+    class Django:
+        model = Category
+        fields = ["name", "slug"]
+```
+
+**3. Run Index Django Management Command to create the index on Redis:**
+
+```bash
+python manage.py index
+```
+
+**Note:** This will also populate the index with existing data from the database
+
+Now category objects will be indexed on Redis on create/update/delete events.
 
 ### How the data is stored:
 
