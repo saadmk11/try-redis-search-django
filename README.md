@@ -234,6 +234,10 @@ To make deploys work, you need to create free account on [Redis Cloud](https://r
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/saadmk11/try-redis-search-django)
 
+**Note:**
+- Search Page: `http://<your-domain>.herokuapp.com/`
+- Django Admin Page: `http://<your-domain>.herokuapp.com/admin` (Username: `admin`, Password: `12345`)
+
 ## License
 
 The code in this project is released under the [MIT License](LICENSE).
