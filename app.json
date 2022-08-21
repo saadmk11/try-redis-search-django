@@ -16,7 +16,7 @@
         },
         "DEBUG": {
             "description": "Run Django on Debug Mode",
-            "value": true
+            "value": false
         },
         "ALLOWED_HOSTS": {
             "description": "Django Allowed Hosts",
@@ -24,7 +24,7 @@
         },
         "REDIS_SEARCH_AUTO_INDEX": {
             "description": "Enable Redisearch Auto Indexing",
-            "required": true
+            "value": true
         },
         "REDIS_OM_URL": {
             "description": "Redis URL. E.g: redis://[[username]:[password]]@host:port/[database number]",
