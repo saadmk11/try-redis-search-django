@@ -2,7 +2,7 @@
 
 # Description
 
-I **built** **[`redis-search-django`](https://github.com/saadmk11/redis-search-django)** (**Installable Django Package**) as a part of **[Redis Hackathon on DEV](https://dev.to/devteam/announcing-the-redis-hackathon-on-dev-3248)**. 
+I built an **Installable Django Package** called **[`redis-search-django`](https://github.com/saadmk11/redis-search-django)** as a part of **[Redis Hackathon on DEV](https://dev.to/devteam/announcing-the-redis-hackathon-on-dev-3248)**. 
 **`redis-search-django`** is a package that provides **auto indexing** and **searching** capabilities for Django model instances using **[RediSearch](https://redis.io/docs/stack/search/)**. 
 
 This is a Demo App that uses `redis-search-django` package to Showcase a Product Search Engine with **auto indexing** and **searching**.
@@ -62,38 +62,60 @@ python manage.py index
 
 Now **category objects** will be indexed **automatically** on **Redis** on **create/update/delete** events.
 
-More Complex Examples Can be found here: https://github.com/saadmk11/redis-search-django
+**More Complex Examples Can be found here:** https://github.com/saadmk11/redis-search-django
 
 ### How the data is stored:
 
-1. The App uses **RedisJSON** to **store the data** in Redis.
+1. The App uses **RedisJSON** to **store the data** into Redis.
 
-Example Unit of data:
+```python
+# Create Django Model Objects
+
+vendor = Vendor.objects.create(name="New Vendor", establishment_date="2022-08-21")
+category = Category.objects.create(name="Foods", slug="foods")
+product = Product.objects.create(
+    name="NEW PRODUCT", description="Product Description",
+    price=20, vendor=vendor, category=category
+)
+
+tag = Tag.objects.create(name="Brand 1")
+tag2 = Tag.objects.create(name="Brand 2")
+product.tags.set([tag, tag2])
+
+
+# After the Model Object Creation `redis-search-django` will automatically run this Command to update the Product Index
+
+ProductDocument.from_model_instance(product_obj,save=True)
+
+# Generated Command:
+# JSON.SET ProductDocument:628 . {"pk": "628", "vendor": {"pk": "629", "identifier": "a9f75bd4-203f-42f0-aae6-93ba3366f7cd", "name": "New Vendor", "email": "test@test.com", "establishment_date": "2022-08-21"}, "category": {"pk": "1", "custom_field": "CUSTOM FIELD VALUE", "name": "Foods", "slug": "foods"}, "tags": [{"pk": "7", "name": "Brand 1"}, {"pk": "8", "name": "Brand 2"}], "name": "NEW PRODUCT", "description": "Product Description", "price": 20, "created_at": "2022-08-21T08:14:46.309872+00:00", "quantity": 1, "available": 1}
+```
+
+**Example Unit of data stored in Redis:**
 
 ```json
 {
-    "pk": "306",
-    "vendor": {
-        "pk": "306",
-        "identifier": "3de47386-ffe9-4512-8161-6f96f853cf9a",
-        "name": "Company-2",
-        "email": "company-2@example.com",
-        "establishment_date": "2022-08-20",
+    "pk": "628",
+    "vendor": { 
+        "pk": "629",
+        "identifier": "a9f75bd4-203f-42f0-aae6-93ba3366f7cd",
+        "name": "New Vendor",
+        "email": "test@test.com",
+        "establishment_date": "2022-08-21"
     },
-    "category": {
-        "pk": "7",
-        "custom_field": "CUSTOM FIELD VALUE",
-        "name": "Shoes",
-        "slug": "shoes",
-    },
-    "tags": [{"pk": "7", "name": "Brand 1"}, {"pk": "12", "name": "Model 3"}],
-    "name": "TIVO HD DIGITAL VIDEO RECORDER (180 HOUR) - TCD652160",
-    "description": "TiVo HD Digital Video Recorder - TCD652160/ Search, Record And Watch Shows In HD/ Record Up To 20 Hours In HD (Or 180 Hours In Standard Definition)/ Record Two Shows At Once In HD/ Replaces Your Cable Box And Works With Over-The-Air Antenna/ USB Connectivity/ Remote Control/ Netflix Instant Streaming/ TiVo Service Required And Sold Separately",
-    "price": 10,
-    "created_at": "2022-08-20T14:09:24.253934+00:00",
+    "category": { "pk": "1", "custom_field": "CUSTOM FIELD VALUE", "name": "Foods", "slug": "foods" },
+    "tags": [
+        { "pk": "7", "name": "Brand 1" },
+        { "pk": "8", "name": "Brand 2" }
+    ],
+    "name": "NEW PRODUCT",
+    "description": "Product Description",
+    "price": 20,
+    "created_at": "2022-08-21T08:14:46.309872+00:00",
     "quantity": 1,
     "available": 1
 }
+
 ```
 
 2. The App also creates index schema (using `redis-search-django` and `redis-om`) for each Django Model so that we can perform search operation on it using **RediSearch**.
