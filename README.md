@@ -9,6 +9,19 @@ This is a Demo App that uses `redis-search-django` package to Showcase a Product
 
 **redis-search-django Documentation:** https://github.com/saadmk11/redis-search-django
 
+### Features
+
+- Management Command to create, update and populate the RediSearch Index.
+- Auto Index on Model object Create, Update and Delete.
+- Auto Index on Related Model object Add, Update, Remove and Delete.
+- Easy to create Document classes (Uses Django Model Form Class like structure).
+- Index nested models (e.g: `OneToOneField`, `ForeignKey` and `ManyToManyField`).
+- Search documents using `redis-om`.
+- Search Result Pagination.
+- Search Result Sorting.
+- RediSearch Result to Django QuerySet.
+- Faceted Search.
+
 
 ### App Screenshot
 
