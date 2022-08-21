@@ -1,0 +1,25 @@
+{
+    "app_name": "Product Search Engine with Django and RediSearch",
+    "description": "Showcases a Product Search Engine with Filtering, Facets, Sorting and Pagination Using redis-search-django Package",
+    "hidden": true,
+    "rank": 21,
+    "type": "Full App",
+    "contributed_by": "Community",
+    "repo_url": "https://github.com/saadmk11/try-redis-search-django",
+    "download_url": "https://github.com/saadmk11/try-redis-search-django/archive/main.zip",
+    "hosted_url": "",
+    "quick_deploy": "true",
+    "deploy_buttons": [
+        {
+            "heroku": "https://heroku.com/deploy?template=https://github.com/saadmk11/try-redis-search-django"
+        }
+    ],
+    "language": ["Python"],
+    "redis_commands": ["JSON.GET", "JSON.SET", "JSON.DEL", "HSET", "HGET", "HDEL", "FT.AGGREGATE", "FT.CREATE", "FT.SEARCH", "FT.INFO"],
+    "redis_features": ["search", "json"],
+    "redis_modules": ["RediJSON", "RediSearch"],
+    "app_image_urls": ["https://user-images.githubusercontent.com/24854406/185760945-18bacae6-af2e-48bd-a412-d6fac878fd0c.png"],
+    "special_tags": ["Hackathon"],
+    "verticals": ["Retail"],
+    "markdown": "https://raw.githubusercontent.com/saadmk11/try-redis-search-django/main/README.md"
+}

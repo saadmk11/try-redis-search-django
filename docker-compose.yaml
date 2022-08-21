@@ -7,6 +7,10 @@ services:
       - .:/app
     ports:
       - 8000:8000
+    depends_on:
+      - redis
+    environment:
+      - REDIS_OM_URL=redis://redis:6379
     command: >
       bash -c "python manage.py migrate --noinput &&
                python manage.py index &&

@@ -8,15 +8,6 @@ ENV DEBIAN_FRONTEND noninteractive
 # set work directory
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install \
-       -y \
-       --no-install-recommends \
-       --no-install-suggests \
-       git \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-
 # install dependencies
 COPY ./requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
