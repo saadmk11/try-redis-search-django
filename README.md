@@ -22,8 +22,13 @@ This is a Demo App that uses `redis-search-django` package to Showcase a Product
 - RediSearch Result to Django QuerySet.
 - Faceted Search.
 
+### App Architecture Diagram
+
+![Group 3](https://user-images.githubusercontent.com/24854406/185867964-f03898af-fc63-45bc-836a-26a9b7ad694a.png)
+
 
 ### App Screenshot
+
 
 ![RediSearch Django](https://user-images.githubusercontent.com/24854406/185760945-18bacae6-af2e-48bd-a412-d6fac878fd0c.png)
 
